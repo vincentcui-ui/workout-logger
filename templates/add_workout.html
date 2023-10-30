@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Workout</title>
+</head>
+<body>
+    <h2>Add Workout</h2>
+    <form action="/add_workout" method="post">
+        Date: <input type="date" name="date"><br><br>
+        Duration (in minutes): <input type="number" name="duration"><br><br>
+        <input type="submit" value="Add Workout">
+    </form>
+</body>
+</html>
+{% endblock %}

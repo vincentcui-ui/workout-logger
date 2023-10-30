@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Workouts</title>
+</head>
+<body>
+    <h2>Workouts</h2>
+    <ul>
+    {% for workout in workouts %}
+        <li>Date: {{ workout.date }}, Duration: {{ workout.total_duration }} minutes</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
+{% endblock %}
