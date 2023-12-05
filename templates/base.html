@@ -12,6 +12,7 @@
         {% if 'user_id' in session %}
             <a href="{{ url_for('add_workout') }}">Add Workout</a>
             <a href="{{ url_for('list_workouts') }}">List Workouts</a>
+            <a href="{{ url_for('filter_workouts') }}">Filter Workouts</a>
             <a href="{{ url_for('logout') }}">Logout</a>
         {% else %}
             <a href="{{ url_for('login') }}">Login</a>

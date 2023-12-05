@@ -1,18 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>List Workouts</title>
-</head>
-<body>
-    <h2>Workouts</h2>
-    <ul>
-    {% for workout in workouts %}
-        <li>Date: {{ workout.date }}, Duration: {{ workout.total_duration }} minutes</li>
-    {% endfor %}
-    </ul>
-</body>
-</html>
+<h2>Workouts</h2>
+<ul>
+{% for workout in workouts %}
+    <li>
+        Date: {{ workout.date }}, Duration: {{ workout.total_duration }} minutes
+        - <a href="{{ url_for('edit_workout', workout_id=workout.workout_id) }}">Edit</a>
+        - <form action="{{ url_for('delete_workout', workout_id=workout.workout_id) }}" method="post" style="display: inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+{% endfor %}
+</ul>
+
 {% endblock %}

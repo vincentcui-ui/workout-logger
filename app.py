@@ -120,6 +120,49 @@ def list_workouts():
     workouts = Workout.query.filter_by(user_id=session['user_id']).all()
     return render_template('list_workouts.html', workouts=workouts)
 
+@app.route('/edit_workout/<int:workout_id>', methods=['GET', 'POST'])
+def edit_workout(workout_id):
+    workout = Workout.query.get_or_404(workout_id)
+
+    if request.method == 'POST':
+        workout.date = datetime.strptime(request.form.get('date'), '%Y-%m-%d').date()
+        workout.total_duration = int(request.form.get('total_duration'))
+        
+        db.session.commit()
+        flash('Workout updated successfully!')
+        return redirect(url_for('list_workouts'))
+
+    return render_template('edit_workout.html', workout=workout)
+
+@app.route('/delete_workout/<int:workout_id>', methods=['POST'])
+def delete_workout(workout_id):
+    workout = Workout.query.get_or_404(workout_id)
+    db.session.delete(workout)
+    db.session.commit()
+    flash('Workout deleted successfully!')
+    return redirect(url_for('list_workouts'))
+
+@app.route('/filter_workouts', methods=['GET', 'POST'])
+def filter_workouts():
+    if request.method == 'POST':
+        start_date = datetime.strptime(request.form.get('start_date'), '%Y-%m-%d').date()
+        end_date = datetime.strptime(request.form.get('end_date'), '%Y-%m-%d').date()
+        min_duration = int(request.form.get('min_duration'))
+
+        filtered_workouts = Workout.query.filter(
+            Workout.user_id == session['user_id'],
+            Workout.date >= start_date,
+            Workout.date <= end_date,
+            Workout.total_duration >= min_duration
+        ).all()
+        chart_data = {
+            'labels': [workout.date.strftime('%Y-%m-%d') for workout in filtered_workouts],
+            'data': [workout.total_duration for workout in filtered_workouts]
+        }
+        return render_template('filtered_workouts.html', workouts=filtered_workouts, chart_data=chart_data)
+
+    return render_template('filter_workouts.html')
+
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Filter Workouts</h2>
+<form action="{{ url_for('filter_workouts') }}" method="post">
+    Start Date: <input type="date" name="start_date"><br><br>
+    End Date: <input type="date" name="end_date"><br><br>
+    Minimum Duration (in minutes): <input type="number" name="min_duration"><br><br>
+    <input type="submit" value="Filter Workouts">
+</form>
+
+{% endblock %}

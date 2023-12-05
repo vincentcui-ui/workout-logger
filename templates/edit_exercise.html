@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>Edit Exercise</h2>
+<form action="{{ url_for('edit_exercise', exercise_id=exercise.exercise_id) }}" method="post">
+    Name: <input type="text" name="name" value="{{ exercise.name }}"><br><br>
+    Description: <input type="text" name="description" value="{{ exercise.description }}"><br><br>
+    Type: <input type="text" name="type" value="{{ exercise.type }}"><br><br>
+    <input type="submit" value="Update Exercise">
+</form>
+
+{% endblock %}
