@@ -5,27 +5,27 @@
 <canvas id="workoutChart"></canvas>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var ctx = document.getElementById('workoutChart').getContext('2d');
-        var chartData = JSON.parse('{{ chart_data | tojson | safe }}');
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: chartData.labels,
-                datasets: [{
-                    label: 'Workout Duration',
-                    data: chartData.data,
-                    backgroundColor: 'rgba(0, 123, 255, 0.5)'
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+    var chartDataLabels = JSON.parse('{{ chart_data.labels | tojson | safe }}');
+    var chartDataValues = JSON.parse('{{ chart_data.data | tojson | safe }}');
+
+    var ctx = document.getElementById('workoutChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: chartDataLabels,
+            datasets: [{
+                label: 'Workout Duration',
+                data: chartDataValues,
+                backgroundColor: 'rgba(0, 123, 255, 0.5)'
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
+        }
     });
 </script>
 
@@ -36,7 +36,3 @@
 </ul>
 
 {% endblock %}
-
-<script>
-    console.log(JSON.parse('{{ chart_data | tojson | safe }}'));
-</script>
