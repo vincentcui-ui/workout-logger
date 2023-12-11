@@ -163,6 +163,13 @@ def filter_workouts():
 
     return render_template('filter_workouts.html')
 
+@app.route('/get_user_workouts/<int:user_id>')
+def get_user_workouts(user_id):
+    stmt = text("SELECT * FROM workout WHERE user_id = :user_id")
+    result = db.engine.execute(stmt, user_id=user_id)
+    workouts = [{'date': row[2], 'duration': row[3]} for row in result]
+    return render_template('user_workouts.html', workouts=workouts)
+
 @app.route('/logout')
 def logout():
     session.pop('user_id', None)
